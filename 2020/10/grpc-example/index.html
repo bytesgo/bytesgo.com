@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>grpc-example 基于gRPC实现的简单rpc框架 | bytesgo</title>
+    <meta name="generator" content="VuePress 1.6.0">
+    <link rel="icon" href="/img/favicon.ico">
+    <script src="/js/demo.js"></script>
+    <script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="description" content="
+
+基于gRPC实现的简单rpc框架
+
+配置
+
+属性配置
+
+pom.xml中配置依赖的gRPC版本号
+
+		1.32.1
+
+		${project.basedir}/src/main/java-pr ...">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.6b52fa6d.css" as="style"><link rel="preload" href="/assets/js/app.0d12ee2c.js" as="script"><link rel="preload" href="/assets/js/6.38d9fce8.js" as="script"><link rel="preload" href="/assets/js/3.8f73414a.js" as="script"><link rel="preload" href="/assets/js/19.adb0eb96.js" as="script"><link rel="prefetch" href="/assets/js/10.7dcc91e0.js"><link rel="prefetch" href="/assets/js/11.0688b97c.js"><link rel="prefetch" href="/assets/js/12.c4928a08.js"><link rel="prefetch" href="/assets/js/13.fb7fba04.js"><link rel="prefetch" href="/assets/js/14.1914b112.js"><link rel="prefetch" href="/assets/js/15.733a2660.js"><link rel="prefetch" href="/assets/js/16.f010e478.js"><link rel="prefetch" href="/assets/js/17.a31010c9.js"><link rel="prefetch" href="/assets/js/18.1f7a4e06.js"><link rel="prefetch" href="/assets/js/20.8f003085.js"><link rel="prefetch" href="/assets/js/21.285d7cd8.js"><link rel="prefetch" href="/assets/js/22.df00eb69.js"><link rel="prefetch" href="/assets/js/23.81a34538.js"><link rel="prefetch" href="/assets/js/24.8f10f607.js"><link rel="prefetch" href="/assets/js/25.74a57618.js"><link rel="prefetch" href="/assets/js/26.96a8bf1c.js"><link rel="prefetch" href="/assets/js/27.112f78ed.js"><link rel="prefetch" href="/assets/js/4.a7239bd4.js"><link rel="prefetch" href="/assets/js/5.493e9ca1.js"><link rel="prefetch" href="/assets/js/7.c569497f.js"><link rel="prefetch" href="/assets/js/8.353bf241.js"><link rel="prefetch" href="/assets/js/9.19e903e3.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.0cbd6f70.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6b52fa6d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/" class="nav-link home-link">bytesgo </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/" class="nav-link">首页</a></li><li class="nav-item"><a href="/blog/" class="nav-link">博客</a></li><li class="nav-item"><a href="/tag/" class="nav-link">标签</a></li><li class="nav-item"><a href="https://github.com/bytesgo" target="_blank" rel="noopener noreferrer" class="nav-link external">Github</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/" class="nav-link mobile-home-link">bytesgo </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/" class="nav-link">首页</a></li><li class="mobile-nav-item"><a href="/blog/" class="nav-link">博客</a></li><li class="mobile-nav-item"><a href="/tag/" class="nav-link">标签</a></li><li class="mobile-nav-item"><a href="https://github.com/bytesgo" target="_blank" rel="noopener noreferrer" class="nav-link external">Github</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        grpc-example 基于gRPC实现的简单rpc框架
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">leeyazhou</span> <!----></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2020-10-01T00:00:00.000Z">
+      2020年10月
+    </time></div> <ul itemprop="keywords" class="post-meta-tags"><li class="post-tag" data-v-42ccfcd5><a href="/tag/grpc" data-v-42ccfcd5><span data-v-42ccfcd5>grpc</span></a></li><li class="post-tag" data-v-42ccfcd5><a href="/tag/微服务框架" data-v-42ccfcd5><span data-v-42ccfcd5>微服务框架</span></a></li></ul></div></header> <div itemprop="articleBody" class="content__default"><h2 id="grpc-example"><a href="#grpc-example" class="header-anchor">#</a> grpc-example</h2> <p>基于gRPC实现的简单rpc框架</p> <h2 id="配置"><a href="#配置" class="header-anchor">#</a> 配置</h2> <h3 id="属性配置"><a href="#属性配置" class="header-anchor">#</a> 属性配置</h3> <p>pom.xml中配置依赖的gRPC版本号</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	&lt;properties&gt;
+		&lt;grpc.version&gt;1.32.1&lt;/grpc.version&gt;
+		&lt;!-- Message源文件输出目录 --&gt;
+		&lt;javaOutputDirectory&gt;${project.basedir}/src/main/java-proto&lt;/javaOutputDirectory&gt;
+		&lt;!-- gRPC源文件输出目录 --&gt;
+		&lt;protocPluginOutputDirectory&gt;${project.basedir}/src/main/java-grpc&lt;/protocPluginOutputDirectory&gt;
+	&lt;/properties&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="maven依赖"><a href="#maven依赖" class="header-anchor">#</a> Maven依赖</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>	&lt;dependencies&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;io.grpc&lt;/groupId&gt;
+			&lt;artifactId&gt;grpc-netty&lt;/artifactId&gt;
+			&lt;version&gt;${grpc.version}&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;io.grpc&lt;/groupId&gt;
+			&lt;artifactId&gt;grpc-protobuf&lt;/artifactId&gt;
+			&lt;version&gt;${grpc.version}&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;io.grpc&lt;/groupId&gt;
+			&lt;artifactId&gt;grpc-stub&lt;/artifactId&gt;
+			&lt;version&gt;${grpc.version}&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+			&lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+			&lt;version&gt;1.2.74&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+			&lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+			&lt;version&gt;1.2.3&lt;/version&gt;
+		&lt;/dependency&gt;
+
+	&lt;/dependencies&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><h3 id="maven插件"><a href="#maven插件" class="header-anchor">#</a> Maven插件</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>	&lt;build&gt;
+		&lt;extensions&gt;
+			&lt;extension&gt;
+				&lt;groupId&gt;kr.motd.maven&lt;/groupId&gt;
+				&lt;artifactId&gt;os-maven-plugin&lt;/artifactId&gt;
+				&lt;version&gt;1.6.2&lt;/version&gt;
+			&lt;/extension&gt;
+		&lt;/extensions&gt;
+		&lt;plugins&gt;
+			&lt;plugin&gt;
+				&lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;
+				&lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;
+				&lt;version&gt;0.6.1&lt;/version&gt;
+				&lt;configuration&gt;
+					&lt;protocArtifact&gt;
+						com.google.protobuf:protoc:3.13.0:exe:${os.detected.classifier}
+					&lt;/protocArtifact&gt;
+					&lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
+					&lt;pluginArtifact&gt;
+						io.grpc:protoc-gen-grpc-java:1.32.1:exe:${os.detected.classifier}
+					&lt;/pluginArtifact&gt;
+				&lt;/configuration&gt;
+				&lt;executions&gt;
+					&lt;execution&gt;
+						&lt;goals&gt;
+							&lt;goal&gt;compile&lt;/goal&gt;
+							&lt;goal&gt;compile-custom&lt;/goal&gt;
+						&lt;/goals&gt;
+					&lt;/execution&gt;
+				&lt;/executions&gt;
+			&lt;/plugin&gt;
+		&lt;/plugins&gt;
+	&lt;/build&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h2 id="框架开发"><a href="#框架开发" class="header-anchor">#</a> 框架开发</h2> <h3 id="protobuf文件"><a href="#protobuf文件" class="header-anchor">#</a> Protobuf文件</h3> <p>创建文件 src/main/proto/crpc_protocol.proto</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>syntax = &quot;proto3&quot;;
+
+option java_package = &quot;com.github.leeyazhou.grpc&quot;;
+option java_multiple_files = true;
+option java_outer_classname = &quot;CrpcProtocol&quot;;
+
+message RequestGrpcMessage {
+    bytes invocation = 1;
+}
+
+message ResponseGrpcMessage {
+    bytes response = 1;
+}
+
+service MessageService {
+    rpc request (RequestGrpcMessage) returns (ResponseGrpcMessage);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>执行如下命令会生成Protobuf文件对应的Java类</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>mvn protobuf:compile 
+mvn protobuf:compile-custom
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="公用基础模型类"><a href="#公用基础模型类" class="header-anchor">#</a> 公用基础模型类</h3> <p>Invocation.java</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core;
+
+public class Invocation {
+
+	private String serviceName;
+	private String methodName;
+	private Object[] args;
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public Object[] getArgs() {
+		return args;
+	}
+
+	public void setArgs(Object[] args) {
+		this.args = args;
+	}
+
+	
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><p>Response.java</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core;
+
+public class Response {
+
+	private boolean error;
+	private Object response;
+	private Throwable exception;
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
+		this.response = response;
+	}
+
+	public Throwable getException() {
+		return exception;
+	}
+
+	public void setException(Throwable exception) {
+		this.exception = exception;
+	}
+
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div><h3 id="server代码"><a href="#server代码" class="header-anchor">#</a> Server代码</h3> <p>GrpcServer.java</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core.server;
+
+import java.io.IOException;
+
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+
+public class GrpcServer {
+	private Server server;
+	private ServiceHandler serviceHandler;
+
+	public GrpcServer(int port) {
+		this.serviceHandler = new ServiceHandler();
+		this.server = ServerBuilder.forPort(port)
+				// 将具体实现的服务添加到gRPC服务中
+				.addService(new GrpcServerHandler(serviceHandler))
+
+				.build();
+	}
+
+	public GrpcServer addService(String name, Object service) {
+		serviceHandler.addService(name, service);
+		return this;
+	}
+
+	public void start() throws IOException {
+		server.start();
+	}
+
+	public void shutdown() {
+		server.shutdown();
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><p>GrpcServerHandler.java负责处理接收到的请求，并转发给ServiceHandler.java处理，处理完成后响应给请求端。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core.server;
+
+import com.github.leeyazhou.grpc.MessageServiceGrpc.MessageServiceImplBase;
+import com.github.leeyazhou.grpc.core.Invocation;
+import com.github.leeyazhou.grpc.core.Response;
+import com.github.leeyazhou.grpc.core.serializer.JSONSerializer;
+import com.github.leeyazhou.grpc.core.serializer.Serializer;
+import com.github.leeyazhou.grpc.RequestGrpcMessage;
+import com.github.leeyazhou.grpc.ResponseGrpcMessage;
+import com.google.protobuf.ByteString;
+
+import io.grpc.stub.StreamObserver;
+
+public class GrpcServerHandler extends MessageServiceImplBase {
+	private ServiceHandler serviceHandler;
+	private Serializer serializer = new JSONSerializer();
+
+	public GrpcServerHandler(ServiceHandler serviceHandler) {
+		this.serviceHandler = serviceHandler;
+	}
+
+	@Override
+	public void request(RequestGrpcMessage request, StreamObserver&lt;ResponseGrpcMessage&gt; responseObserver) {
+		try {
+			final Invocation invocation = serializer.deserialize(request.getInvocation().toByteArray(),
+					Invocation.class);
+			final Response response = handleRequest(invocation);
+
+			byte[] jsonByte = serializer.serialize(response);
+			ResponseGrpcMessage resp = ResponseGrpcMessage.newBuilder().setResponse(ByteString.copyFrom(jsonByte))
+					.build();
+			responseObserver.onNext(resp);
+			responseObserver.onCompleted();
+		} catch (Exception e) {
+			responseObserver.onError(e);
+		}
+	}
+
+	private Response handleRequest(Invocation invocation) {
+		Response response = new Response();
+		response.setError(false);
+		try {
+			Object ret = serviceHandler.handle(invocation);
+			response.setResponse(ret);
+		} catch (Exception e) {
+			response.setError(true);
+			response.setException(e);
+		}
+		return response;
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br></div></div><p>ServiceHandler.java</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core.server;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.github.leeyazhou.grpc.core.Invocation;
+
+public class ServiceHandler {
+	private Map&lt;String, Object&gt; services = new ConcurrentHashMap&lt;&gt;();
+	private Map&lt;String, Method&gt; serviceMethods = new ConcurrentHashMap&lt;&gt;();
+
+	public Object handle(Invocation invocation) {
+		Object service = services.get(invocation.getServiceName());
+		Method serviceMethod = serviceMethods.get(invocation.getServiceName() + &quot;$&quot; + invocation.getMethodName());
+
+		try {
+			return serviceMethod.invoke(service, invocation.getArgs());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void addService(String name, Object service) {
+		this.services.put(name, service);
+		Method[] methods = service.getClass().getDeclaredMethods();
+		if (methods != null) {
+			for (Method method : methods) {
+				String key = name + &quot;$&quot; + method.getName();
+				serviceMethods.put(key, method);
+			}
+		}
+
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div></div><h3 id="client代码"><a href="#client代码" class="header-anchor">#</a> Client代码</h3> <p>GrpcClient.java</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>package com.github.leeyazhou.grpc.core.client;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.github.leeyazhou.grpc.MessageServiceGrpc;
+import com.github.leeyazhou.grpc.RequestGrpcMessage;
+import com.github.leeyazhou.grpc.ResponseGrpcMessage;
+import com.github.leeyazhou.grpc.core.Invocation;
+import com.github.leeyazhou.grpc.core.Response;
+import com.github.leeyazhou.grpc.core.serializer.JSONSerializer;
+import com.github.leeyazhou.grpc.core.serializer.Serializer;
+import com.google.protobuf.ByteString;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+public class GrpcClient {
+	private final Serializer serializer = new JSONSerializer();
+	private final MessageServiceGrpc.MessageServiceBlockingStub blockingStub;
+	private static final Map&lt;String, GrpcClient&gt; clientCache = new ConcurrentHashMap&lt;&gt;();
+
+	public static GrpcClient get(String host, int port) {
+		final String key = host + &quot;:&quot; + port;
+		return clientCache.compute(key, (k1, v1) -&gt; {
+			return v1 != null ? v1 : new GrpcClient(host, port);
+		});
+	}
+
+	public GrpcClient(String host, int port) {
+		ManagedChannel managedChannel = ManagedChannelBuilder.forAddress(host, port)
+				// 使用非安全机制传输
+				.usePlaintext().build();
+		this.blockingStub = MessageServiceGrpc.newBlockingStub(managedChannel);
+	}
+
+	public Response request(Invocation invocation) {
+		byte[] jsonBytes = serializer.serialize(invocation);
+		ByteString byteString = ByteString.copyFrom(jsonBytes);
+
+		RequestGrpcMessage greeting = RequestGrpcMessage.newBuilder().setInvocation(byteString).build();
+		ResponseGrpcMessage resp = blockingStub.request(greeting);
+		byte[] responseByte = resp.getResponse().toByteArray();
+		return serializer.deserialize(responseByte, Response.class);
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><h2 id="示例"><a href="#示例" class="header-anchor">#</a> 示例</h2> <h3 id="服务类开发"><a href="#服务类开发" class="header-anchor">#</a> 服务类开发</h3> <p>EchoService.java定义服务接口</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public interface EchoService {
+	String echo(String echo);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>EchoServiceImpl.java实现服务功能：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class EchoServiceImpl implements EchoService {
+	@Override
+	public String echo(String echo) {
+		System.err.println(&quot;回声: &quot; + echo);
+		return echo;
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="启动服务端"><a href="#启动服务端" class="header-anchor">#</a> 启动服务端</h3> <p>GrpcProvider.java 启动Server服务，并监听端口8000</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class GrpcProvider {
+
+	public static void main(String[] args) throws Exception {
+		new GrpcProvider().start();
+		Thread.sleep(Integer.MAX_VALUE);
+	}
+
+	public void start() throws Exception {
+		int port = 8000;
+		GrpcServer server = new GrpcServer(port);
+		server.addService(EchoService.class.getSimpleName(), new EchoServiceImpl());
+		server.start();
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="客户端调用服务"><a href="#客户端调用服务" class="header-anchor">#</a> 客户端调用服务</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class GrpcConsumer {
+
+	public static void main(String[] args) {
+		new GrpcConsumer().start();
+	}
+
+	public void start() {
+		String host = &quot;127.0.0.1&quot;;
+		int port = 8000;
+		GrpcClient client = GrpcClient.get(host, port);
+
+		Invocation invocation = new Invocation();
+		invocation.setServiceName(&quot;EchoService&quot;);
+		invocation.setMethodName(&quot;echo&quot;);
+		invocation.setArgs(new String[] { &quot;测试GRPC&quot; });
+		Response response = client.request(invocation);
+		System.out.println(response.getResponse());
+	}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h2 id="其他"><a href="#其他" class="header-anchor">#</a> 其他</h2> <p>源码地址<a href="https://github.com/leeyazhou/grpc-example" target="_blank" rel="noopener noreferrer">github.com/leeyazhou/grpc-example<svg xmlns="http://www.w3.org/2000/svg" aria-labelledby="outbound-link-title" role="img" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><title id="outbound-link-title">(opens new window)</title> <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer><!----> <hr> <!----></footer></article> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h2 active"><a href="#grpc-example" title="grpc-example">grpc-example</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#配置" title="配置">配置</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#属性配置" title="属性配置">属性配置</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#maven依赖" title="Maven依赖">Maven依赖</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#maven插件" title="Maven插件">Maven插件</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#框架开发" title="框架开发">框架开发</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#protobuf文件" title="Protobuf文件">Protobuf文件</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#公用基础模型类" title="公用基础模型类">公用基础模型类</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#server代码" title="Server代码">Server代码</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#client代码" title="Client代码">Client代码</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#示例" title="示例">示例</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#服务类开发" title="服务类开发">服务类开发</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#启动服务端" title="启动服务端">启动服务端</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#客户端调用服务" title="客户端调用服务">客户端调用服务</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#其他" title="其他">其他</a></div></div></div></div> <footer class="footer" data-v-4a27c186><div class="footer-left-wrap" data-v-4a27c186><ul class="contact" data-v-4a27c186><li class="contact-item" data-v-4a27c186><a href="https://github.com/bytesgo" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-4a27c186><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github" data-v-4a27c186><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-v-4a27c186></path></svg>
+          
+        </a></li><li class="contact-item" data-v-4a27c186><a href="https://twitter.com/bytesgo" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-4a27c186><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter" data-v-4a27c186><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" data-v-4a27c186></path></svg>
+          
+        </a></li></ul></div> <div class="footer-right-wrap" data-v-4a27c186><ul class="copyright" data-v-4a27c186><li class="copyright-item" data-v-4a27c186><a href="https://policies.google.com/privacy?hl=en-US" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-4a27c186>Privacy Policy</a></li><li class="copyright-item" data-v-4a27c186><a href="https://github.com/bytesgo" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-4a27c186>MIT Licensed | Copyright © 2020-2021 bytesgo.com</a></li></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.0d12ee2c.js" defer></script><script src="/assets/js/6.38d9fce8.js" defer></script><script src="/assets/js/3.8f73414a.js" defer></script><script src="/assets/js/19.adb0eb96.js" defer></script>
+  </body>
+</html>
